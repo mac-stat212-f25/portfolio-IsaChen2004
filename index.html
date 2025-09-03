@@ -287,11 +287,11 @@ cookieconsent.run({
 
 
 </header><section id="welcome" class="level1 unnumbered"><h1 class="unnumbered">Welcome</h1>
-<p>Welcome to my online portfolio for COMP/STAT112 course taken at <a href="https://www.macalester.edu/">Macalester College</a>. Please, use the side bar on the left for navigation.</p>
+<p>Welcome to my online portfolio for COMP/STAT112 course taken at <a href="https://www.macalester.edu/">Macalester College</a>. Please, use the side bar on the left for navigation. nice to meet you</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="wordcloud2 html-widget html-fill-item" id="htmlwidget-decf8cb12748a611d0e2" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-decf8cb12748a611d0e2">{"x":{"word":["welcome","to","comp","stat","212","mac","st paul"],"freq":[10,2,8,8,8,6,6],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":18,"backgroundColor":"white","gridSize":0,"minRotation":-0.7853981633974483,"maxRotation":0.7853981633974483,"shuffle":true,"rotateRatio":0.4,"shape":"cardioid","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+<div class="wordcloud2 html-widget html-fill-item" id="htmlwidget-3949fca18f807b3b0f44" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-3949fca18f807b3b0f44">{"x":{"word":["welcome","to","comp","stat","212","mac","st paul"],"freq":[10,2,8,8,8,6,6],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":18,"backgroundColor":"white","gridSize":0,"minRotation":-0.7853981633974483,"maxRotation":0.7853981633974483,"shuffle":true,"rotateRatio":0.4,"shape":"cardioid","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
 </div>
 </div>
 
@@ -928,41 +928,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu"># Welcome {.unnumbered}</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a>Welcome to my online portfolio for COMP/STAT112 course taken at <span class="co">[</span><span class="ot">Macalester College</span><span class="co">](https://www.macalester.edu/)</span>.  Please, use the side bar on the left for navigation.</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="in">```{r}</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#| output: false</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"wordcloud2"</span>, <span class="st">"here"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="in">```</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="in">```{r}</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#| output: false</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(packages, <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())), <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="in">```</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="in">```{r}</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="co">#| output: false</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">#| message: false</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a></span>
-<span id="cb1-30"><a href="#cb1-30"></a><span class="fu">lapply</span>(packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="in">```</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="in">```{r}</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="co">#| output: false</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a></span>
-<span id="cb1-39"><a href="#cb1-39"></a>ds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="st">"msg.csv"</span>))</span>
-<span id="cb1-40"><a href="#cb1-40"></a><span class="in">```</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a></span>
-<span id="cb1-44"><a href="#cb1-44"></a><span class="in">```{r}</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-46"><a href="#cb1-46"></a></span>
-<span id="cb1-47"><a href="#cb1-47"></a><span class="fu">wordcloud2</span>(<span class="at">data =</span> ds, <span class="at">shape =</span> <span class="st">"cardioid"</span>)</span>
-<span id="cb1-48"><a href="#cb1-48"></a><span class="in">```</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>nice to meet you </span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="in">```{r}</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#| output: false</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"wordcloud2"</span>, <span class="st">"here"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="in">```</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="in">```{r}</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#| output: false</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(packages, <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())), <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="in">```</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="in">```{r}</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="co">#| output: false</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="co">#| message: false</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="fu">lapply</span>(packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="in">```</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a></span>
+<span id="cb1-36"><a href="#cb1-36"></a><span class="in">```{r}</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#| output: false</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a></span>
+<span id="cb1-40"><a href="#cb1-40"></a>ds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="st">"msg.csv"</span>))</span>
+<span id="cb1-41"><a href="#cb1-41"></a><span class="in">```</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a></span>
+<span id="cb1-45"><a href="#cb1-45"></a><span class="in">```{r}</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a></span>
+<span id="cb1-48"><a href="#cb1-48"></a><span class="fu">wordcloud2</span>(<span class="at">data =</span> ds, <span class="at">shape =</span> <span class="st">"cardioid"</span>)</span>
+<span id="cb1-49"><a href="#cb1-49"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
