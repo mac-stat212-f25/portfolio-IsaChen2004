@@ -126,8 +126,9 @@ Look at the [`geom_linerange` documentation page](https://ggplot2.tidyverse.org/
 ![SFO Weather Records in 2011](https://hash-mac.github.io/stat212site-f25/images/sfo_first_graph.png)
 
 ```{r weather_plot_temp_records}
-ggplot(weather) +
+ggplot(weather, aes(x = Day, y =   )) +
     theme_classic()
+
 ```
 
 ::: {.callout-tip title="Keyboard Shortcuts"}
