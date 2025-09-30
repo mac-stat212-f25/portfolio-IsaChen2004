@@ -65,6 +65,28 @@
     ]
   },
   {
+    "objectID": "src/tt/hw04-tt.html",
+    "href": "src/tt/hw04-tt.html",
+    "title": "Homework 04",
+    "section": "",
+    "text": "TidyTuesday Section (optional)\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story with effective visualization(s). Provide sufficient background for readers to grasp your narrative.\nCode\nlibrary(tidyverse)\nlibrary(naniar)\nlibrary(mice)\nlibrary(scales)\n# Clean data provided by owlzyseyes. No cleaning was necessary.\n\nlocal_all  &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-16/all_recipes.csv\")\nlocal_cuis &lt;-  read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-16/cuisines.csv\")\nResearch Question: Do healthier recipes (lower calories, fat, carbs) receive higher ratings on average, and does this trend differ by cuisine type?\nCode\ndf &lt;- local_all %&gt;%\n  select(name, url, calories, fat, carbs, protein,\n         avg_rating, total_ratings, reviews) %&gt;%\n  left_join(\n    local_cuis %&gt;% select(name, url, country),\n    by = c(\"name\", \"url\")\n  )\n\nq &lt;- quantile(df$calories, probs = c(0.01, 0.99), na.rm = TRUE)\n\ndf_clean &lt;- df %&gt;%\n  filter(!is.na(avg_rating),\n         !is.na(calories)) %&gt;%\n  filter(calories &gt;= q[1], calories &lt;= q[2]) %&gt;%\n  mutate(\n\n    country = forcats::fct_lump_n(factor(country), n = 10, other_level = \"Other\"),\n    rating_group = ifelse(avg_rating &gt; 4, \"High Rating (&gt;4)\", \"Low Rating (≤4)\")\n  )\nCode\np1 &lt;- ggplot(df_clean, aes(x = calories, y = avg_rating, color = country)) +\n  geom_point(alpha = 0.6, size = 1.5) +\n  geom_smooth(se = FALSE, linewidth = 1) +\n  coord_cartesian(ylim = c(0, 5)) +\n  labs(\n    title    = \"Calories vs Average Rating by Cuisine\",\n    x = \"Calories per serving\",\n    y = \"Average rating (0–5)\",\n    color = \"Cuisine\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(legend.position = \"bottom\")\n\np1\nCode\np2 &lt;- ggplot(\n  df_clean,\n  aes(x = forcats::fct_reorder(country, calories, .fun = median, .desc = TRUE),\n      y = calories, fill = country)\n) +\n  geom_violin(trim = FALSE, alpha = 0.7) +\n  geom_boxplot(width = 0.12, outlier.shape = NA, color = \"grey15\") +\n  facet_wrap(~ rating_group) +\n  labs(\n    title    = \"Calories Distribution by Cuisine & Rating Group\",\n    x = \"Cuisine (ordered by median calories)\",\n    y = \"Calories per serving\",\n    fill = \"Cuisine\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(\n    legend.position = \"none\",\n    axis.text.x = element_text(angle = 45, hjust = 1)\n  )\n\np2\nCode\ndf_clean %&gt;%\n  group_by(country) %&gt;%\n  summarise(\n    n = n(),\n    mean_cal = mean(calories),\n    mean_rating = mean(avg_rating),\n    cor_cal_rating = suppressWarnings(cor(calories, avg_rating, use = \"complete.obs\"))\n  ) %&gt;%\n  arrange(desc(cor_cal_rating))\n\n\n# A tibble: 12 × 5\n   country              n mean_cal mean_rating cor_cal_rating\n   &lt;fct&gt;            &lt;int&gt;    &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;\n 1 Indian              62     314.        4.50        0.265  \n 2 Cajun and Creole    48     486.        4.6         0.199  \n 3 Italian             53     443.        4.64        0.194  \n 4 Tex-Mex             50     436.        4.54        0.0961 \n 5 Other              481     345.        4.55        0.0717 \n 6 &lt;NA&gt;             12060     334.        4.52        0.0376 \n 7 Korean              52     350.        4.6         0.0225 \n 8 Jewish              59     287.        4.59       -0.00407\n 9 Spanish             35     380.        4.57       -0.00947\n10 Chinese             64     372.        4.58       -0.0682 \n11 Canadian            30     394.        4.56       -0.129  \n12 Soul Food           32     360.        4.56       -0.198\nFrom the scatterplot and smoothed trend lines, we see that the overall relationship between calories and average rating is weakly positive—recipes with higher calories tend to have slightly higher ratings, but the effect is small.\nWhen we split by cuisine, we notice interesting differences: • Indian, Cajun & Creole, and Italian cuisines show the strongest positive relationship between calories and ratings. Higher-calorie recipes in these cuisines tend to receive higher ratings. • Chinese and Spanish cuisines, in contrast, show almost no positive relationship, and in some cases, slightly negative. • The violin plot shows that high-rated recipes (&gt;4) tend to have moderate calorie ranges, while low-rated recipes (≤4) are more scattered. This suggests that extremely high or low calories do not guarantee good ratings—taste and cultural preferences likely matter more.\nOverall, calories are not the main factor driving ratings, but they may interact with cuisine style and expectations.",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Homework 04</span>"
+    ]
+  },
+  {
+    "objectID": "src/tt/hw04-tt.html#tidytuesday-section-optional",
+    "href": "src/tt/hw04-tt.html#tidytuesday-section-optional",
+    "title": "Homework 04",
+    "section": "",
+    "text": "Instructions\n\n\n\nYou can count work on this week’s TidyTuesday toward the exceptional work required for an A in the Homework component.",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Homework 04</span>"
+    ]
+  },
+  {
     "objectID": "src/ica/ica-sample1.html",
     "href": "src/ica/ica-sample1.html",
     "title": "ICA Sample 1",
@@ -72,7 +94,7 @@
     "text": "Add content here",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>ICA Sample 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>ICA Sample 1</span>"
     ]
   },
   {
@@ -83,7 +105,7 @@
     "text": "Add content here",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>ICA Sample 2</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>ICA Sample 2</span>"
     ]
   },
   {
@@ -94,7 +116,7 @@
     "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode\n#1\nlibrary(tidyverse)\nweather &lt;- read_csv(\"../../data/raw/weather.csv\")\nCode\n#2\nhead(weather,10)\n\n\n# A tibble: 10 × 18\n   Month   Day   Low  High NormalLow NormalHigh RecordLow LowYr RecordHigh\n   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;\n 1    11    20    48    55        48         62        35  1964         69\n 2     6    16    52    68        53         70        46  1952         90\n 3     5     9    47    63        50         66        41  1950         88\n 4    10    26    47    69        52         69        39  1954         89\n 5     9    27    55    82        55         73        47  1955         96\n 6     7     6    52    70        54         71        47  1953         86\n 7    11     3    48    60        51         66        40  1971         84\n 8     3    26    47    58        47         62        38  1980         79\n 9    10     4    57    66        55         72        47  1989         95\n10    11    26    49    59        47         60        36  1952         76\n# ℹ 9 more variables: HiYear &lt;dbl&gt;, Precip &lt;dbl&gt;, RecordPrecip &lt;dbl&gt;,\n#   PrecipYr &lt;dbl&gt;, date &lt;chr&gt;, Record &lt;lgl&gt;, RecordText &lt;chr&gt;, RecordP &lt;lgl&gt;,\n#   CulmPrec &lt;dbl&gt;\n\n\nCode\nweather_cleaned &lt;- weather  %&gt;% \n  mutate(PrecipYr = na_if(PrecipYr,99999))\nhead(weather,10)\n\n\n# A tibble: 10 × 18\n   Month   Day   Low  High NormalLow NormalHigh RecordLow LowYr RecordHigh\n   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;\n 1    11    20    48    55        48         62        35  1964         69\n 2     6    16    52    68        53         70        46  1952         90\n 3     5     9    47    63        50         66        41  1950         88\n 4    10    26    47    69        52         69        39  1954         89\n 5     9    27    55    82        55         73        47  1955         96\n 6     7     6    52    70        54         71        47  1953         86\n 7    11     3    48    60        51         66        40  1971         84\n 8     3    26    47    58        47         62        38  1980         79\n 9    10     4    57    66        55         72        47  1989         95\n10    11    26    49    59        47         60        36  1952         76\n# ℹ 9 more variables: HiYear &lt;dbl&gt;, Precip &lt;dbl&gt;, RecordPrecip &lt;dbl&gt;,\n#   PrecipYr &lt;dbl&gt;, date &lt;chr&gt;, Record &lt;lgl&gt;, RecordText &lt;chr&gt;, RecordP &lt;lgl&gt;,\n#   CulmPrec &lt;dbl&gt;",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
     ]
   },
   {
@@ -105,7 +127,7 @@
     "text": "Read in the weather data in this file with the correct relative file path after you move it to the instructed location.\nThere is a variable that has values that don’t make sense in the data context. Figure out which variable this is and clean it up by making those values missing using na_if().\nCreate a variable called dateInYear that indicates the day of the year (1-365) for each case. (Jan 1 should be 1, and Dec 31 should be 365).\nCreate a variable called month_name that shows the 3-letter abbreviation for each case.\nSave the wrangled data to the data/processed/ folder using write_csv(). Name this file weather_clean.csv. Look up the documentation for this function by typing ?write_csv in the Console. You’ll need to write an appropriate relative path.",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
     ]
   },
   {
@@ -116,7 +138,7 @@
     "text": "🧩 Learning Goals\nBy the end of this lesson, you should be able to:",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -127,7 +149,7 @@
     "text": "Navigate ggplot2 reference page to find needed functions for a desired visualization\nNavigate the different sections of a function help page to construct desired plot features, in particular,\n\nNavigate the Usage section to identify arguments that must be set\nNavigate the Arguments section to understand how arguments work\nNavigate the Aesthetics section to learn how plot appearance can be controlled\nNavigate the Examples section for some usage examples\n\nIdentify when to use different data arguments within ggplot() and geom_() layers",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -138,7 +160,7 @@
     "text": "Introduction 1\nIn this lesson, we are going to recreate NYTimes 2015 Temperature Visualization (html) using data from San Francisco (SFO) in 2011.\n\n\n\nScreenshot of NYTimes 2015 Temperature Visualization",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -149,7 +171,7 @@
     "text": "Reading Data\nRun the code chunk below to load the tidyverse package and read in the San Francisco weather data.\n\n\nCode\nlibrary(tidyverse)\nweather &lt;- read_csv(\"https://mac-stat.github.io/data/sfo_weather.csv\")",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -160,7 +182,7 @@
     "text": "Understanding Data\nBelow is the codebook of the data. Familiarize yourself with the meaning of each variable. Use the codebook as a reference when using the data.\n\nMonth: Month of the year (1-12)\nDay: Day within the month (1-31)\nLow/High: Low/high temperature this day\nNormalLow/NormalHigh: Typical low/high temperature for this day of the year\nRecordLow/RecordHigh: Record low/high temperature for this day of the year\nLowYr/HighYr: Year in which the record low/high was observed\nPrecip: Amount of precipitation (inches) this day\nRecordPrecip: Record amount of precipitation for this day of the year\nPrecipYr: Year in which the record precipitation was observed\ndate: The actual date in 2011 for this day in YYYY-MM-DD format\ndateInYear: What day of the year is it? (1-365)\nRecord: Logical (TRUE/FALSE) indicating whether this day had a high temperature record\nRecordText: Text that displays the record high for this day (\"Record high: ##\")\nRecordP: Logical (TRUE/FALSE) indicating whether this day had a precipitation record\nCulmPrec: Cumulative precipitation for the month up to this day",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -171,7 +193,7 @@
     "text": "Exercise 1\nExamine the NYTimes 2015 Temperature Visualization (html) then answer the following questions.\nData Storytelling\n\nRelate the intro paragraph: “Scientists declared that 2015 was Earth’s hottest year on record…” to the design of the visualization. In particular, based on the intro paragraph,\n\nWhat key message/claim does NYTimes want readers to be able to explore? NYTimes want readers to explore how much warmer does 2015 was compared to last year.\nHow did this goal inform what information is displayed in the visualization? The tempreture of the year of 2015.\n\n\nAesthetic Mapping\n\nWhat specific variables (from the data codebook) underlie the visualization? Month, Day, Low/High,NormalLow/NormalHigh,RecordLow/RecordHigh,CulmPrec,RecordText`\nHow do these variables map to aesthetics of the visual elements, eg, position, size, shape, and color of glyphs? Everyday tempreture have been put in boxplot and place side by side, and filled by red filling color.",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -182,7 +204,7 @@
     "text": "Exercise 2\nNavigate the Geoms section of the ggplot2 reference page to find a geom that corresponds to the visual elements in the temperature plot. Using both the small thumbnail visuals on the right and the names of the geom’s, brainstorm some possibilities for geom’s you might use to recreate the temperature visualization.\n\n\n\n\n\n\nNavigating Documentation / Reference Pages\n\n\n\nYou need to navigate the geoms further by opening up their reference pages to understand if a particular geom is suitable for our task. Let’s look at the geom_point documentation page to learn how to read a documentation page..\nThe Usage section shows all of the possible inputs (arguments) to the geom. These are all of the ways that a geom can be customized. Just looking at the argument names can help give a hint as to what arguments might fit our needs.\nThe Arguments section, on the other hand, explains in detail what each argument does and the possible values the argument can take. The mapping, data, and ... arguments will be the most commonly used by far.\n\nmapping is the argument that is being used when we specify which variables should link or map to the plot aesthetics (the code inside aes()).\ndata is the argument where we specify the dataset containing the variables that the geom is using.\n... is used for fixed aesthetics (ones that don’t correspond to a variable), eg, to set the color of all points, we use color = \"red\" and to set the size of all points, we use size = 3.\n\nThe Aesthetics section of a geom documentation page gives information on how the visual elements of the geom correspond to data. For example, the geom_point documentation page shows that x and y aesthetics are available. It also shows some new aesthetics like stroke.\n\n\n\n\n\n\n\n\ndata Argument\n\n\n\nPreviously you have used one dataset per plot by specifying that as the first argument of ggplot(). However, multiple data sets can be passed into ggplot as shown in the example below.\n\n\nCode\ndata(diamonds)\n\ndiamonds_avg_price &lt;- diamonds |&gt;\n  group_by(carat) |&gt;\n  summarize(avg_price = mean(price)) |&gt;\n  arrange(carat)\ndiamonds_avg_price &lt;- diamonds_avg_price[seq(1, nrow(diamonds_avg_price), 3), ]\n\nggplot(diamonds, aes(x = carat, y = price)) +\n  geom_point() +\n  geom_point(\n    data = diamonds_avg_price,\n    aes(x = carat, y = avg_price),\n    color = \"deepskyblue\",\n    size = 3\n  )\n\n\n\n\n\n\n\n\n\n\n\nLook at the geom_linerange documentation page and start off your temperature visualization with the record lows and highs. Your plot should look like the one below. The hex code of the used light tan color is #ECEBE3.\n\n\n\nSFO Weather Records in 2011\n\n\n\n\nCode\nggplot(weather, aes(x = Day, y =   )) +\n    theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nKeyboard Shortcuts\n\n\n\nAs you work on this plot, try to use some new keyboard shortcuts. Focus on the following:\n\nInsert code chunk: Ctrl+Alt+I (Windows). Option+Command+I (Mac).\nRun current code chunk: Ctrl+Shift+Enter (Windows). Command+Shift+Return (Mac).\nRun current line/currently selected lines: Ctrl+Enter (Windows). Command+Return (Mac).",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -193,7 +215,7 @@
     "text": "Exercise 3\nIn your visualization, also display the usual temperatures (NormalLow and NormalHigh) and actual 2011 temperatures (Low and High). Your plot should look like the one below. The hex code of the color used for the usual temperatures is \"#C8B8BA\" and for the color used for actual temperatures is \"#A90248\".\n\n\n\nSFO observed, Average, and Record Daily Temperatures in 2011\n\n\n\n\n\n\n\n\nFiner Control\n\n\n\nIf you’d like finer control of the width of these lines/rectangles, check out the geom_rect documentation page.",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -204,7 +226,7 @@
     "text": "Exercise 4\nRecreate the visual demarcations of the months by adding vertical lines separating the months. Brainstorm how we might draw those vertical lines. What geom might we use? What subset of the data might we use in that geom layer to draw lines only at the month divisions?",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -215,7 +237,7 @@
     "text": "Exercise 5\nChange the x-axis labels so that the month names display in the center of each month’s slice of the plot.\n\n\n\n\n\n\nMonth Names\n\n\n\nR has built-in variables called month.abb and month.name that contain abbreviated and full month names.\n\n\nTry to figuring out this new challenge using search engines and LLMs:\n\nSearch Engines. Use Google to search for possible solutions using the jargon that is most likely to return the most relevant results. Record search queries and your thought process in selecting which search results to look at first.\nLLMs. Use ChatGPT or Gemini with prompts that will most efficiently get you the desired results. Record the chat prompts used and output given. Evaluate the output. Do you fully understand the code generated? How can you tell that the generated code is correct?",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -226,7 +248,7 @@
     "text": "Exercise 6\nCreate a precipitation plot that looks like the following. Note that\n\nThe triangles point to precipitation records–refer to the data codebook above for the RecordP variable.\nThe numbers on the plot indicate the total precipitation for the month–search the hjust and vjust options to adjust the alignment of the numbers.\nThe blue and tan colors hex codes are \"#32a3d8\" and \"#ebeae2\", respectively.\n\n\n\n\nSFO Precipitation in 2011",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -237,7 +259,7 @@
     "text": "Done!\n\nCheck the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
@@ -248,7 +270,7 @@
     "text": "The exercise in this lesson are inspired by an assignment from the Concepts in Computing with Data course at UC Berkeley taught by Dr. Deborah Nolan.↩︎",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Advanced Data Viz</span>"
     ]
   },
   {
