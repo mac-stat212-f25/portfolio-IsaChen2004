@@ -1,0 +1,113 @@
+---
+title: "Homework 04"
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+```{r}
+library(tidyverse)
+library(naniar)
+library(mice)
+library(scales)
+# Clean data provided by owlzyseyes. No cleaning was necessary.
+
+local_all  <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-16/all_recipes.csv")
+local_cuis <-  read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-16/cuisines.csv")
+
+```
+Research Question: Do healthier recipes (lower calories, fat, carbs) receive higher ratings on average, and does this trend differ by cuisine type?
+
+
+```{r}
+df <- local_all %>%
+  select(name, url, calories, fat, carbs, protein,
+         avg_rating, total_ratings, reviews) %>%
+  left_join(
+    local_cuis %>% select(name, url, country),
+    by = c("name", "url")
+  )
+
+q <- quantile(df$calories, probs = c(0.01, 0.99), na.rm = TRUE)
+
+df_clean <- df %>%
+  filter(!is.na(avg_rating),
+         !is.na(calories)) %>%
+  filter(calories >= q[1], calories <= q[2]) %>%
+  mutate(
+
+    country = forcats::fct_lump_n(factor(country), n = 10, other_level = "Other"),
+    rating_group = ifelse(avg_rating > 4, "High Rating (>4)", "Low Rating (≤4)")
+  )
+```
+
+```{r}
+p1 <- ggplot(df_clean, aes(x = calories, y = avg_rating, color = country)) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  geom_smooth(se = FALSE, linewidth = 1) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(
+    title    = "Calories vs Average Rating by Cuisine",
+    x = "Calories per serving",
+    y = "Average rating (0–5)",
+    color = "Cuisine"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
+
+p1
+```
+
+```{r}
+p2 <- ggplot(
+  df_clean,
+  aes(x = forcats::fct_reorder(country, calories, .fun = median, .desc = TRUE),
+      y = calories, fill = country)
+) +
+  geom_violin(trim = FALSE, alpha = 0.7) +
+  geom_boxplot(width = 0.12, outlier.shape = NA, color = "grey15") +
+  facet_wrap(~ rating_group) +
+  labs(
+    title    = "Calories Distribution by Cuisine & Rating Group",
+    x = "Cuisine (ordered by median calories)",
+    y = "Calories per serving",
+    fill = "Cuisine"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+p2
+```
+
+```{r}
+df_clean %>%
+  group_by(country) %>%
+  summarise(
+    n = n(),
+    mean_cal = mean(calories),
+    mean_rating = mean(avg_rating),
+    cor_cal_rating = suppressWarnings(cor(calories, avg_rating, use = "complete.obs"))
+  ) %>%
+  arrange(desc(cor_cal_rating))
+```
+
+From the scatterplot and smoothed trend lines, we see that the overall relationship between calories and average rating is weakly positive—recipes with higher calories tend to have slightly higher ratings, but the effect is small.
+
+When we split by cuisine, we notice interesting differences:
+	•	Indian, Cajun & Creole, and Italian cuisines show the strongest positive relationship between calories and ratings. Higher-calorie recipes in these cuisines tend to receive higher ratings.
+	•	Chinese and Spanish cuisines, in contrast, show almost no positive relationship, and in some cases, slightly negative.
+	•	The violin plot shows that high-rated recipes (>4) tend to have moderate calorie ranges, while low-rated recipes (≤4) are more scattered. This suggests that extremely high or low calories do not guarantee good ratings—taste and cultural preferences likely matter more.
+
+Overall, calories are not the main factor driving ratings, but they may interact with cuisine style and expectations.
