@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../src/ica/15-scraping-notes.html" rel="next">
+<link href="../../src/ica/14-apis-1-notes.html" rel="next">
 <link href="../../src/ica/11-iteration-1-notes.html" rel="prev">
 <script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
@@ -454,6 +454,16 @@ cookieconsent.run({
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../src/ica/14-apis-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">14-apis-1-notes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/14-apis-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">14 APIs P2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../src/ica/15-scraping-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">15 Web scraping</span></a>
   </div>
 </li>
@@ -625,10 +635,10 @@ cookieconsent.run({
 <pre><code># A tibble: 4 × 3
   type                  mem_alloc total_time
   &lt;chr&gt;                 &lt;bch:byt&gt;   &lt;bch:tm&gt;
-1 for_loop_no_storage     18.63GB      16.3s
-2 for_loop_with_storage  402.04KB    492.5ms
-3 purrr_map                1.08MB    524.5ms
-4 standard_func          150.65KB     18.3ms</code></pre>
+1 for_loop_no_storage     18.63GB      16.6s
+2 for_loop_with_storage  402.04KB    492.3ms
+3 purrr_map                1.08MB    519.8ms
+4 standard_func          150.65KB     19.7ms</code></pre>
 </div>
 </div>
 </section>
@@ -1473,8 +1483,8 @@ $z
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../src/ica/15-scraping-notes.html" class="pagination-link" aria-label="15 Web scraping">
-        <span class="nav-page-text"><span class="chapter-title">15 Web scraping</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../src/ica/14-apis-1-notes.html" class="pagination-link" aria-label="14-apis-1-notes">
+        <span class="nav-page-text"><span class="chapter-title">14-apis-1-notes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1567,7 +1577,7 @@ $z
 <span id="cb30-91"><a href="#cb30-91"></a></span>
 <span id="cb30-94"><a href="#cb30-94"></a><span class="in">```{r}</span></span>
 <span id="cb30-95"><a href="#cb30-95"></a><span class="co"># Compile Results</span></span>
-<span id="cb30-96"><a href="#cb30-96"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb30-96"><a href="#cb30-96"></a></span>
 <span id="cb30-97"><a href="#cb30-97"></a><span class="fu">bind_rows</span>(results1, results2, results3, results4) <span class="sc">|&gt;</span></span>
 <span id="cb30-98"><a href="#cb30-98"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">c</span>(<span class="st">"for_loop_no_storage"</span>, <span class="st">"for_loop_with_storage"</span>, <span class="st">"purrr_map"</span>, <span class="st">"standard_func"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb30-99"><a href="#cb30-99"></a>  <span class="fu">select</span>(type, mem_alloc, total_time)  <span class="sc">|&gt;</span> <span class="fu">print</span>()</span>

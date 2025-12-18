@@ -454,6 +454,16 @@ cookieconsent.run({
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../src/ica/14-apis-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">14-apis-1-notes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/14-apis-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">14 APIs P2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../src/ica/15-scraping-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">15 Web scraping</span></a>
   </div>
 </li>
@@ -818,7 +828,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                             min median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                          &lt;bch:&gt; &lt;bch:&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x &lt;- c(x, i) }  16.5s  16.5s    0.0605    18.6GB     82.1</code></pre>
+1 for (i in 1:1e+05) { x &lt;- c(x, i) }  15.4s  15.4s    0.0650    18.6GB     88.3</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -835,7 +845,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                            min  median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                       &lt;bch:tm&gt; &lt;bch:t&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x[i] &lt;- i }   2.11ms  2.14ms      465.     402KB     4.06</code></pre>
+1 for (i in 1:1e+05) { x[i] &lt;- i }   2.11ms  2.15ms      464.     402KB     4.05</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -849,7 +859,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                 &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 x &lt;- seq(1, 1e+05, by = 1)    236µs    317µs     3152.    1.91MB     93.5</code></pre>
+1 x &lt;- seq(1, 1e+05, by = 1)    236µs    310µs     3241.    1.91MB     99.3</code></pre>
 </div>
 </div>
 </section>
@@ -1030,20 +1040,20 @@ NULL</code></pre>
 <pre><code>$mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x131248fb8&gt;
+&lt;bytecode: 0x11c8147b8&gt;
 &lt;environment: namespace:base&gt;
 
 $med
 function (x, na.rm = FALSE, ...) 
 UseMethod("median")
-&lt;bytecode: 0x137da3518&gt;
+&lt;bytecode: 0x12d2f5518&gt;
 &lt;environment: namespace:stats&gt;
 
 $sd
 function (x, na.rm = FALSE) 
 sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     na.rm = na.rm))
-&lt;bytecode: 0x10e5784e0&gt;
+&lt;bytecode: 0x12e4329e8&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 <details class="code-fold">
